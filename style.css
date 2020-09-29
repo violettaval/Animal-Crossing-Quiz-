@@ -20,6 +20,7 @@ h4 {
     font-size: 20;
     background-color: lightseagreen;
 }
+
 h2{  
     font-size: 36px;
     width: max-content;
@@ -28,7 +29,8 @@ h2{
 img{
     height: auto;
     width: 500px;
-    background-color: khaki;
+    justify-content: center;
+    align-items: center;
 }
 /* apply css that wont appear until questions are populated */
 div{
