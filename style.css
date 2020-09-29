@@ -1,0 +1,53 @@
+/* im a style css sheet */
+.hidden{
+    display: none;
+}
+body {
+    width:100%;
+}
+header {
+    width:100%; 
+}
+h1 {
+    width:100%;
+    font-size: 40px;
+    background-color: magenta;
+
+}
+h4 {
+    float: right;
+    text-align: right;
+    font-size: 20;
+    background-color: lightseagreen;
+}
+h2{  
+    font-size: 36px;
+    width: max-content;
+    background-color: lightcoral;
+}
+img{
+    height: auto;
+    width: 500px;
+    background-color: khaki;
+}
+/* apply css that wont appear until questions are populated */
+div{
+    font-size: medium;
+    font-weight: bold;
+    background-color: grey;
+}
+#question1slot, #question3slot {
+    float: left;
+
+}
+#question2slot, #question4slot {
+    float: right;
+}
+footer {
+    width:100%;
+    position: static bottom;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+    background-color: indigo;
+}
