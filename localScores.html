@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>High Score Page</title>
 </head>
 <body>
+    <h1>High Score Board</h1>
     
+
+
+    <script>
+        var highScore = JSON.parse(localStorage.getItem("userData"));
+        document.write(highScore);
+
+    </script>
+
 </body>
 </html>

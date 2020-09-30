@@ -4,27 +4,38 @@
 }
 body {
     width:100%;
+    background-color: lightgreen;
 }
 header {
     width:100%; 
 }
 h1 {
     width:100%;
-    font-size: 40px;
-    background-color: magenta;
+    font-size: 60px;
+    color:tan;
+    font-weight: 900;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: greenyellow;
+    justify-content: center;
+    align-items: center;
+    position: static top;
 
 }
 h4 {
     float: right;
     text-align: right;
     font-size: 20;
-    background-color: lightseagreen;
+    font-weight: 700;
+    color: darkgoldenrod;
+
 }
 
 h2{  
     font-size: 36px;
     width: max-content;
-    background-color: lightcoral;
+
+    color: peru;
+    background-color: palegreen;
 }
 img{
     height: auto;
@@ -51,5 +62,5 @@ footer {
     justify-content: center;
     align-items: center;
     margin: 12px;
-    background-color: indigo;
+
 }

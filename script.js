@@ -2,6 +2,8 @@
 var index;
 var qIndex;
 var secondsLeft;
+var answeredQuestions = 0;
+var score = 0;
     // refs the timer unit displayed on the screen 
 var counter = document.querySelector("#countdown");
     // start button
@@ -38,17 +40,10 @@ function setTime() {
     var timerInterval = setInterval(function () {
         secondsLeft--;
         counter.textContent = secondsLeft;
-
+            //make end of game happen
         if (secondsLeft === 0) {
             clearInterval(timerInterval);
-            console.log("Timer has ended");
-            //make end of game happen
-        }
-        if(secondsLeft < 0) {
-            clearInterval(timerInterval);
-            console.log("Timer has ended");
-            //make end of game happen
-            
+            endGame();
         }
     }, 1000);
 }
@@ -79,7 +74,6 @@ function populate() {
     imgElements.setAttribute("src", animal[index].image_url);
     imgElements.setAttribute("alt", animal[index].name);
     imgElements.removeAttribute("class");
-
 }
 
     // populate question
@@ -111,7 +105,7 @@ function layoutStartUp() {
         //show options
         holdingAnswer.removeAttribute("class", "hidden");        
         // fills values based on the question asked
-        $('holdingAnswer').attr('value', function () {
+        holdingAnswer.textContent = function () {
             console.log(qIndex);
             var aIndex = Math.floor(Math.random() * animal.length);
             if (qIndex === 0) {
@@ -126,7 +120,7 @@ function layoutStartUp() {
                 console.log(animal[aIndex].species);
                 return animal[aIndex].species.toString();
             }
-        });
+        }
         //gives questions click trigger
         holdingAnswer.addEventListener("click", function (event) {
             event.stopPropagation;
@@ -144,10 +138,7 @@ function layoutStartUp() {
                 // wrong answer removes time
                 secondsLeft -=30;
                 if(secondsLeft < 0) {
-                    clearInterval(timerInterval);
-                    console.log("Timer has ended");
-                    //make end of game happen
-                    
+                    endGame();                    
                 }
                 navigate();
             }
@@ -163,9 +154,25 @@ function layoutStartUp() {
 }
     //update cycle
 function navigate() {
+    answeredQuestions++;
+    if (answeredQuestions === 5){
+        endGame();
+    }
     populate();
     // h2 append current Question
     changeQuestion();
     // layout button options
     layoutStartUp();
+}
+
+    //make end of game happen
+function endGame() {
+    alert("The game has ended");
+    location.replace("https://violettaval.github.io/Animal-Crossing-Quiz-/localScores.html");
+    if (secondsLeft >= 0) {
+        score = secondsLeft;
+    }
+    var name = prompt("Enter Your Highscore Name");
+    localStorage.setItem("userData", JSON.stringify(name + " : " + score));
+
 }
