@@ -105,22 +105,7 @@ function layoutStartUp() {
         //show options
         holdingAnswer.removeAttribute("class", "hidden");        
         // fills values based on the question asked
-        holdingAnswer.textContent = function () {
-            console.log(qIndex);
-            var aIndex = Math.floor(Math.random() * animal.length);
-            if (qIndex === 0) {
-                console.log(animal[aIndex].birthday);
-                return animal[aIndex].birthday.toString();
-            }
-            else if (qIndex === 1) {
-                console.log(animal[aIndex].name);
-                return animal[aIndex].name.toString();
-            }
-            else if (qIndex === 2) {
-                console.log(animal[aIndex].species);
-                return animal[aIndex].species.toString();
-            }
-        }
+        holdingAnswer.textContent = quizMaster().toString();
         //gives questions click trigger
         holdingAnswer.addEventListener("click", function (event) {
             event.stopPropagation;
@@ -144,14 +129,51 @@ function layoutStartUp() {
             }
         });
         $("#selectedSlot").prepend(holdingAnswer);
-        // content.appendChild(button);
-        // holdingAnswer = section.appendChild(selectedSlot);
     }
-    // populate correct question
-
+        // populate correct question
+    var l = Math.floor(Math.random() * 4) + 1;
+    var rightSlot = "answerSlot" + l;
+    var rightAnswer = document.getElementById(rightSlot);
+    rightAnswer.textContent = rightMaster().toString();
+    $("#rightSlot").prepend(rightAnswer);
     console.log("buttons are filled");
-
 }
+
+function rightMaster() {
+    console.log(animal[index]);
+    if (qIndex === 0) {
+        console.log(animal[index].birthday);
+        return animal[index].birthday.toString();
+    }
+    else if (qIndex === 1) {
+        console.log(animal[index].name);
+        return animal[index].name.toString();
+    }
+    else if (qIndex === 2) {
+        console.log(animal[index].species);
+        return animal[index].species.toString();
+    }
+}
+
+
+    //Grab and sort question answers
+function quizMaster() {
+    console.log(qIndex);
+    var aIndex = Math.floor(Math.random() * animal.length);
+    if (qIndex === 0) {
+        console.log(animal[aIndex].birthday);
+        return animal[aIndex].birthday.toString();
+    }
+    else if (qIndex === 1) {
+        console.log(animal[aIndex].name);
+        return animal[aIndex].name.toString();
+    }
+    else if (qIndex === 2) {
+        console.log(animal[aIndex].species);
+        return animal[aIndex].species.toString();
+    }
+}
+
     //update cycle
 function navigate() {
     answeredQuestions++;
@@ -173,6 +195,18 @@ function endGame() {
         score = secondsLeft;
     }
     var name = prompt("Enter Your Highscore Name");
-    localStorage.setItem("userData", JSON.stringify(name + " : " + score));
+    var timerLeft = 30;
+    timer;
+    function timer() {
+      var timerInterval = setInterval(function() {
+        timerLeft--;
+        if(timerLeft === 0) {
+          clearInterval(timerInterval);
+          localStorage.setItem("userData", JSON.stringify(name + " : " + score));
+        }
+      }, 1000);
+    }
+
+
 
 }
