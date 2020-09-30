@@ -1,22 +1,40 @@
-
 // Global Var
 var index;
+var qIndex;
+var secondsLeft;
     // refs the timer unit displayed on the screen 
 var counter = document.querySelector("#countdown");
     // start button
 var startButton = document.querySelector("#start");
     // lets content be ref'd
-var content = document.querySelector("#content");
+var content = document.querySelector("#content"); // So far only used in testing 
+ 
+    // store asset arrays
+var animalNames = [];
+for (i = 0; i < animal.length; i++) {
+    animalNames[i] = animal[i].name;
+}
+
+var animalSpecies = [];
+for (j = 0; j < animal.length; j++) {
+    animalSpecies[j] = animal[j].species;
+}
+
+var animalBirthdays = [];
+for (h = 0; h < animal.length; h++) {
+    animalBirthdays[h] = animal[h].birthday;
+}
     // Array holds all of the questions available
 var questionList = [
     "What is this animal's birthday?",
     "What is this animal's name?",
     "What kind of animal is this?"
 ];
+
     // function set the time at launch of game
 function setTime() {
     // set the timer to full
-    var secondsLeft = 180;
+    secondsLeft = 180;
     var timerInterval = setInterval(function () {
         secondsLeft--;
         counter.textContent = secondsLeft;
@@ -24,8 +42,14 @@ function setTime() {
         if (secondsLeft === 0) {
             clearInterval(timerInterval);
             console.log("Timer has ended");
+            //make end of game happen
         }
-
+        if(secondsLeft < 0) {
+            clearInterval(timerInterval);
+            console.log("Timer has ended");
+            //make end of game happen
+            
+        }
     }, 1000);
 }
 
@@ -41,14 +65,10 @@ startButton.addEventListener("click", function (event) {
     startButton.getAttribute('class', 'hidden');
         // populate image
     populate();
-    // layoutStartUp();
-    var h2 = document.getElementsByTagName("h2");
-    currentQuestion = questionSelector(questionList);
-    console.log(currentQuestion);
-    h2[0].textContent = (currentQuestion.toString());
-    console.log(h2);
-    // h2.append(currentQuestion);
-
+        // h2 append current Question
+    changeQuestion();
+        // layout button options
+    layoutStartUp();
 });
 
     // sets up image    
@@ -59,13 +79,93 @@ function populate() {
     imgElements.setAttribute("src", animal[index].image_url);
     imgElements.setAttribute("alt", animal[index].name);
     imgElements.removeAttribute("class");
+
 }
 
+    // populate question
+function changeQuestion() {
+    var h2 = document.getElementsByTagName("h2");
+    currentQuestion = questionSelector(questionList);
+    console.log(currentQuestion);
+    h2[0].textContent = (currentQuestion.toString());
+    console.log(h2);
+}    
 
-// question rotator
-function questionSelector(questionList) {
+    // question rotator
+function questionSelector() { 
     qIndex = Math.floor(Math.random() * 3);
     console.log(qIndex);
     console.log(questionList[qIndex]);
     return (questionList[qIndex].toString());
+}
+
+    //builds four question options with click eventlisteners 
+function layoutStartUp() {
+    //fill in four answers
+    for (var k = 1; k < 5; k++) {
+        var selectedSlot = "answerSlot" + k;
+        console.log(selectedSlot);
+        var holdingAnswer = document.getElementById(selectedSlot);
+        //did it break here?
+        console.log(holdingAnswer);
+        //show options
+        holdingAnswer.removeAttribute("class", "hidden");        
+        // fills values based on the question asked
+        $('holdingAnswer').attr('value', function () {
+            console.log(qIndex);
+            var aIndex = Math.floor(Math.random() * animal.length);
+            if (qIndex === 0) {
+                console.log(animal[aIndex].birthday);
+                return animal[aIndex].birthday.toString();
+            }
+            else if (qIndex === 1) {
+                console.log(animal[aIndex].name);
+                return animal[aIndex].name.toString();
+            }
+            else if (qIndex === 2) {
+                console.log(animal[aIndex].species);
+                return animal[aIndex].species.toString();
+            }
+        });
+        //gives questions click trigger
+        holdingAnswer.addEventListener("click", function (event) {
+            event.stopPropagation;
+            // finds out if question is correct
+            if ((qIndex === 0) && (this.value === animal[index].birthday)) {
+                navigate();
+            }
+            else if ((qIndex === 1) && (this.value === animal[index].name)) {
+                navigate();
+            }
+            else if ((qIndex === 2) && (this.value === animal[index].species)) {
+                navigate();
+            }
+            else {
+                // wrong answer removes time
+                secondsLeft -=30;
+                if(secondsLeft < 0) {
+                    clearInterval(timerInterval);
+                    console.log("Timer has ended");
+                    //make end of game happen
+                    
+                }
+                navigate();
+            }
+        });
+        $("#selectedSlot").prepend(holdingAnswer);
+        // content.appendChild(button);
+        // holdingAnswer = section.appendChild(selectedSlot);
+    }
+    // populate correct question
+
+    console.log("buttons are filled");
+
+}
+    //update cycle
+function navigate() {
+    populate();
+    // h2 append current Question
+    changeQuestion();
+    // layout button options
+    layoutStartUp();
 }
